@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ employee.user.get_full_name }}{% endblock %}
+{% block content %}
+<h2>{{ employee.user.get_full_name }}</h2>
+<p><strong>Email:</strong> {{ employee.user.email }}</p>
+<p><strong>Job Title:</strong> {{ employee.job_title }}</p>
+<p><strong>Start Date:</strong> {{ employee.start_date }}</p>
+<p><strong>Birthdate:</strong> {{ employee.birthdate }}</p>
+
+<h3>Addresses:</h3>
+<ul>
+  {% for address in employee.addresses.all %}
+  <li>{{ address.address_type.name }}: {{ address.street }}, {{ address.city }}, {{ address.country }}</li>
+  {% endfor %}
+</ul>
+
+{% if user.is_staff or user == employee.user %}
+  <a href="{% url 'employee_edit' employee.id %}">Edit</a>
+{% endif %}
+{% endblock %}
